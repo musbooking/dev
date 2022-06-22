@@ -1,0 +1,21 @@
+﻿<div>
+    <div>
+        <h4>{{name}}</h4>
+        <div>Источник: {{type}}</div>
+        <p/>
+        <dialog>
+            <legend>Выберите календарь (по умолчанию используется основной):</legend>
+            <div v-for="cal in calendars">
+                <p><input name="dzen" type="radio" value="nedzen" > {{cal.id}}</p>
+            </div>
+        </dialog>
+        
+    </div> 
+
+    <div>
+        <webix-button label='AAAAA1' width=100 v-on:click="name='hhhhhhhhhhhh'"  />
+        <webix-button label='BBBBB' click="myclick()"/>
+        <button class="webix_button" v-on:click="myclick()">CCCC</button>
+    </div> 
+
+</div>

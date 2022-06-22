@@ -1,0 +1,250 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+//using-Nancy;
+//using-Nancy-binding;
+//using-Nancy-security;
+using LinqToDB;
+using My.App;
+using Itall.App.Data;
+using Itall;
+using System.Threading;
+using PayOnline.Sdk.Payments;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+
+namespace My.App.Partners
+{
+    /// <summary>
+    /// Отправление оплаты через платежного агрегатора PayOnline
+    /// </summary>
+    //[Route("payonline")]
+    public class PayOnlineController : PaymentController
+    {
+        //public PayOnlineModule() : base("/")
+        //{
+        //    Post["/", true] = PaymentAsync;
+
+        //    Get["/", true] = PaymentConfirmAsync;
+
+        //    Post["/", true] = PaymentConfirmAsync;
+        //}
+
+        public static void Config(IConfiguration config)
+        {
+            config.Bind(_Settings); //Get<PaymentGatewaySettings>();
+
+            //_Settings = config.ToObject<PaymentGatewaySettings>();
+            //Задаем параметры конфигурации
+            //_Settings = new PaymentGatewaySettings()
+            //{
+            //    //Указываем локализацию, по умолчанию Россия
+            //    Language = "RU",
+            //    //Указываем идентификатор мерчанта
+            //    MerchantId = 75848,
+            //    //Указываем приватный ключ, выданный мерчанту
+            //    ApiKey = "71d30cc1-8658-4aec-a9c0-f429db6dd032", //"9999B77C-8DD9-4123-B412-9999999F0E7D",
+            //    //Указываем адрес сервера процессинга PayOnline
+            //    GatewayUrl = "https://secure.payonlinesystem.com"
+            //}; 
+        }
+
+        static PaymentGatewaySettings _Settings = new PaymentGatewaySettings();
+
+
+
+        const string PAYMENT_SECRET_WORD = ".Fdfgjnet$6u87#";
+
+
+        [HttpPost("payment")]
+        public async Task<IActionResult> PaymentAsync()
+        {
+            this.RequiresAuthentication();
+
+
+            var payment = CreatePayment(Db);
+
+            //Создаем экземпляр библиотеки процессинга
+            var client = new PaymentGateway(_Settings);
+            //Создаем запрос для получения ссылки на платежную форму
+            var key = Itall.String2.HashPassword(payment.Id + PAYMENT_SECRET_WORD);
+
+            var host = $"{this.Request.Scheme}://{this.Request.Host.Value}"; //TODO: this.Request.Url.SiteBase + this.Request.Url.BasePath;
+
+            var pureq = new PaymentUrlRequest()
+            {
+                //Номер заказа в Вашем магазине
+                OrderId = payment.Id.ToString(),
+                //Сумма
+                Amount = payment.Total, // decimal.Parse(Request.Form["amount"]),
+                                        //Валюта
+                Currency = "RUB",
+
+                //Дополнительные опции платежа:
+                //Описание
+                //OrderDdescription = "Оплата сервиса MusBooking", //payment.Description.MaxSize(90), // требование платежного сервиса, в конечном итоге просили вообще убрать
+                //Дата валидности ссылки
+                ValidUntil = DateTime.Now.AddDays(1), //DateTime.Parse(Request.Form["validuntil"]),
+                                                        //URL страницы возврата, по умолчанию та же страница
+                                                        // https://dev.musbooking.com/api/payonline/confirm
+                ReturnUrl = host + "/api/payonline/confirm",
+                //ReturnUrl = "http://localhost:5000/api/payonline/ok",
+                //URL страницы ошибки
+                FailUrl = host + "/api/payonline/error",
+                //Email плательщика
+                Email = payment.Email,
+                //Поле IndustryData - по согласованию с PayOnline
+                IndustryData = null,
+                //Дополнительные параметры по согласованию с PayOnline
+                CustomParameters = new System.Collections.Specialized.NameValueCollection() { { "key", key } },
+            };
+
+            var res = client.GetPaymentUrl(pureq);
+            //Уходим на страницу оплаты
+            //Response.Redirect( client.GetPaymentUrl(pureq).Url );
+
+            var err = res.ErrorMessage;
+            if (!string.IsNullOrWhiteSpace(err))
+            {
+                WebApp.Current.Logger?.LogError($"payonline error: {err}, {pureq.ReturnUrl}, {pureq.FailUrl}, {pureq.Email}, {key}, {res.ErrorCode}");
+                throw new UserException($"Error pay-online: {err} {res.ErrorCode}");
+            }
+
+            return this.Json(new
+            {
+                Url = res.Url,
+                Error = err,
+                Status = System.Net.HttpStatusCode.TemporaryRedirect,
+            });
+        }
+
+
+
+        [HttpGet("confirm")]
+        [HttpPost("confirm")]
+        public async Task<IActionResult> PaymentConfirmAsync(
+            int transactionId,
+            string key,
+            [FromForm(Name = "DateTime")] DateTime date, // = Convert<DateTime>(args.DateTime);
+            [FromForm(Name = "OrderId")] Guid payDocId, // = Convert<Guid>(args.OrderId);
+            [FromForm(Name = "Amount")] string amounts, // = Convert<string>(args.Amount);
+            string securityKey, // = Convert<string>(args.SecurityKey);
+            string cardHolder // = Convert<string>(args.cardHolder);
+            )
+        {
+            //this.RequiresAuthentication();
+
+            //var domain = await db.Domains.FindAsync(domainId);
+            //this.Context.Trace.TraceLog.WriteLog(x=>x.AppendLine("aaaaaaaaaaa")); 
+
+            //var d = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss-fff tt"); //(DateTime.Now - new DateTime(2017, 02, 01)).TotalMilliseconds;
+            //var path = App.Current.Config.GetPath($"log-{d}.txt");
+            //using (var file = new System.IO.StreamWriter(path)) { }
+            //sb.AppendLine(this.Request.Url);
+
+            var sb = new StringBuilder();
+            Common.Message msg;
+
+            try
+            {
+                var args = this.Request.Form;
+
+                //string json = Itall.Net.NetUtils.ToQueryUrl(args);
+                //sb.AppendLine("FORM: " + json);
+
+                // считываем параметры payonline callback
+                //int transactionId = Convert<int>(args.TransactionId);
+                //DateTime date = Convert<DateTime>(args.DateTime);
+                //Guid payDocId = Convert<Guid>(args.OrderId);
+                //string amounts = Convert<string>(args.Amount);
+                int amount = int.Parse(amounts.Split(',', '.')[0]);
+
+                //string securityKey = Convert<string>(args.SecurityKey);
+                //string cardHolder = Convert<string>(args.cardHolder);
+
+                // сохраняем параметры для диагностики результата
+                sb.AppendLine("transactionId: " + transactionId);
+                sb.AppendLine("date: " + date);
+                sb.AppendLine("orderId: " + payDocId);
+                sb.AppendLine("amount: " + amount);
+                sb.AppendLine("securityKey: " + securityKey);
+                sb.AppendLine("cardHolder: " + cardHolder);
+
+                // проверка секретности платежа - переданный key дб правильным секретным ключом
+                //string key = Convert<string>(args.key);
+                var eq = Itall.String2.VerifyHashedPassword(key, payDocId + PAYMENT_SECRET_WORD);
+                if (!eq)
+                    throw new UnauthorizedAccessException("Ошибка SecureKey");
+
+                // делаем транзакции и изменяем параметры тарифов и документов
+                //using (var Db = new DbConnection())
+                {
+                    var paydoc = await Db.PayDocs
+                        .LoadWith(x=>x.PayerDom)
+                        .FindAsync(payDocId);
+
+                    if (paydoc == null)
+                        throw new KeyNotFoundException("Не найдена оплата " + payDocId);
+
+                    //var domain = await db.Domains
+                    //    //.LoadWith(x=>x.PayerDom)
+                    //    .FindAsync(paydoc.PayerDomId.Value);
+                    //if (domain == null)
+                    //    throw new KeyNotFoundException("Не найдена партнерская зона " + paydoc.PayerDomId.Value);
+
+
+                    Db.BeginTransaction1();
+
+                    // вызываем сервисы для уточнения условия платежа
+                    DoPayment(Db, paydoc);
+
+                    paydoc.PayResult += sb.ToString();
+
+                    // сохраняем результаты в базе
+                    await Db.SaveAsync(paydoc.PayerDom);
+                    await Db.SaveAsync(paydoc);
+
+                    // создаем запись в истории
+                    msg = new Common.Message
+                    {
+                        //OrderId = payDocId,
+                        PayDocId = payDocId,
+                        Date = DateTime.Now,
+                        Kind = Common.MessageKind.System,
+                        Text = $"Прошла оплата PayOnline на сумму: {amount} руб.",
+                        Scope = ScopeType.Zone,
+                    };
+                    await Db.CreateInsertAsync(msg);
+                    sb.AppendLine("create msg");
+
+                    Db.CommitTransaction1();
+                }
+            }
+
+            catch (Exception x)
+            {
+                sb.Insert(0, "PayOnline confirm Error: " + x.ToString());
+                msg = new Common.Message
+                {
+                    Date = DateTime.Now,
+                    Kind = Common.MessageKind.Error,
+                    Text = sb.ToString(),
+                    Scope = ScopeType.Zone,
+                };
+                //using (var Db = new DbConnection())
+                {
+                    await Db.CreateInsertAsync(msg);
+                    return Error("Ошибка при проведении оплаты: " + x.Message);
+                }
+            }
+
+            //file.Close();
+            return Ok();
+        }
+
+    }
+
+}

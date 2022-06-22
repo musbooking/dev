@@ -1,0 +1,43 @@
+﻿<style>
+    .buttons, .checkbox {
+        /*padding-left: 10px;
+        height: 60px;
+        padding-top: 10px;*/
+        float: left;
+    }
+
+    .border {
+        border: 1px dotted;
+        border-color:Background;
+        /*background-color: lightgrey;*/
+        padding: 5px;
+    }
+
+</style>
+
+
+<h4 class="">
+    Текущий тариф 
+    <span class="it-border">'#tarif.name#' (фикс.цена #tarif.price# р./мес + комиссия #tarif.commission# %)</span>,
+    <span> действует до  
+        <span class="it-border">#limit#</span>
+    </span>
+</h4>
+<div class="it-event">
+    Комиссия к оплате: <a href="#!/ orders/search/#id#-1?comm=last&domain=#id#">#mobInvComm#</a>
+    Комиссия за текущий период: <a href="#!/ orders/search/#id#-2?comm=curr&domain=#id#">#mobCurrComm#</a>
+    <span></span>
+    <a href="#!/ orders/search-all/#id#-3?comm=mob&sources=2&domain=#id#" class="it-right">Все мобильные бронирования</a>
+    <a href="#!/ orders/search-all/#id#-3?comm=mob1&domain=#id#" class="it-right">Все бронирования |  </a>
+    <a href="#!/ orders/search-all/#id#-3?comm=pred&domain=#id#" class="it-right">Бронирования по предоплате |  </a>
+</div>
+<!--<span class="it-buttons1">{__common.cancelAutoRenewalButton()}</span>-->
+<span class="">{common.form()}</span>
+<hr />
+<strong>Доступные тарифы для продления</strong>
+
+
+
+
+
+

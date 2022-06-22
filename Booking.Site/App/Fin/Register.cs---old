@@ -1,0 +1,62 @@
+﻿using LinqToDB.Mapping;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace My.App.Fin
+{
+    [Table("registers")]  // пока таблицу не меняем, оставлена для совместимости
+    public class Register_old : DbObject
+    {
+        [Column("db", DbType = "char", Length = 2)]
+        [Itall.Index]
+        public Account Db { get; set; }
+
+        [Column("cr", DbType = "char", Length = 2)]
+        [Itall.Index]
+        public Account Cr { get; set; }
+
+        [Column("documentId")]
+        public Guid? DocumentId { get; set; }
+
+        [Column("clientId")]
+        [Itall.Index]
+        public Guid? ClientId { get; set; }
+        [Association(ThisKey = "ClientId", OtherKey = "Id")]
+        public virtual CRM.Client Client { get; set; }
+
+        /// <summary>
+        /// Заказ
+        /// </summary>
+        [Association(ThisKey = "OrderId", OtherKey = "Id")]
+        public virtual Orders.Order Order { get; set; }
+        [Column("orderId")]
+        public Guid? OrderId { get; set; }
+
+        [Column("total")]
+        public int Total { get; set; }
+
+        [Column("text", Length = 0)]
+        public string Text { get; set; }
+
+        public static int Totals(IQueryable<Register_old> registers, Account account)
+        {
+            var dbsum = registers.Where(x=>x.Db==account).Sum(x=>x.Total);
+            var crsum = registers.Where(x => x.Cr == account).Sum(x => x.Total);
+            return dbsum - crsum;
+        }
+
+    }
+
+
+    public enum Account
+    {
+        [MapValue("CL")]
+        Client,
+
+        [MapValue("FF")]
+        Forfeit,
+    }
+}

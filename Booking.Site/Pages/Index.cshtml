@@ -1,0 +1,76 @@
+﻿@page "{module?}"
+@using My.Site
+@namespace My.Site.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model IndexModel
+@{
+    //ViewData["Title"] = "Home page";
+}
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="~/lib/routie_debug.js"></script>
+
+    @*<link href="~/cms/theme.css" rel="stylesheet" />*@
+
+    @if (Model.Config.IsMobile)
+    {
+        <title>@Model.Config.Title (touch)</title>
+        <link href="~/lib/webix/skins/touch.css" rel="stylesheet" />
+        <link href="~/app/common-m.css" rel="stylesheet" />
+    }
+    else
+    {
+        <title>@Model.Config.Title</title>
+        @*<link href="lib/webix/skins/compact.css" rel="stylesheet" />*@
+        <link href="/lib/webix/webix.css" rel="stylesheet" />
+    }
+
+    <link href="~/lib/w3-orange.css" rel="stylesheet" />
+    <link href="~/lib/scheduler/dhtmlxscheduler.css" rel="stylesheet" />
+    <link href="~/lib/webix-ext/sidebar.css" rel="stylesheet" />
+    <link href="~/app/message_default.css" rel="stylesheet" />
+
+    <environment names="Development">
+        <script src="~/lib/webix/webix_debug.js"></script>
+        <link href="~/app/common.css" rel="stylesheet" />
+        <link rel="stylesheet" href="~/app/site.css" />
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/lib/webix/webix.js"></script>
+        <link href="~/app/common.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="~/app/site.min.css" asp-append-version="true" />
+    </environment>
+    @if (Model.Config.IsMobile)
+    {
+    }
+    else
+    {
+        <script src="~/lib/webix/skin.js"></script>
+    }
+
+    <script src="~/lib/webix/i18n/ru.js"></script>
+    @*<script src="~/lib/webix-ext/sidebar.js"></script> ---- входит в новую версию  *@
+    @*<script src="~/lib/webix-ext/xlsx.core.min.js"></script> ---- загружаем динамически  *@
+</head>
+<body>
+    <environment names="Development">
+        <script src="~/app/web-cf.js"></script>
+        <script src="~/app/all.js"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/app/web-cf.min.js"></script>
+        <script src="~/app/all.min.js" asp-append-version="true"></script>
+    </environment>
+
+    <script>
+        app.init();
+        webix.ready(@(Model.Config.Module).run);
+    </script>
+
+</body>
+</html>
+

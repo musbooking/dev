@@ -1,0 +1,43 @@
+﻿using Microsoft.AspNetCore.Mvc;
+//using Microsoft.AspNetCore.SignalR.Client;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace My.App
+{
+    //public class Chat : Microsoft.AspNetCore.SignalR.Hub
+    //{
+    //    public Task Send(string message)
+    //    {
+    //        //await this.OnConnectedAsync();
+    //        return Clients.AllExcept(new[] { this.Context.ConnectionId })
+    //            .InvokeAsync("Send", new[] { message + ": " + DateTime.Now });
+    //    }
+    //}
+
+
+    //public class HubsController: BaseController
+    //{
+    //    [Route("send/{s}")]
+    //    public async Task Send(string s)
+    //    {
+    //        var connection = new HubConnectionBuilder()
+    //            .WithUrl("http://localhost:5000/chat")
+    //            .WithConsoleLogger()
+    //            .Build();
+
+    //        connection.On<string>("Send", data =>
+    //        {
+    //            Console.WriteLine($"Received: {data}");
+    //        });
+
+    //        await connection.StartAsync();
+
+    //        await connection.InvokeAsync("Send", s);
+
+    //    }
+
+    //}
+}

@@ -1,0 +1,24 @@
+﻿
+.webix_el_combo input, .webix_el_search input, .webix_el_select select, .webix_el_text input, .webix_el_textarea textarea, div.webix_inp_static {
+    border-color: #ddd;
+}
+
+
+.webix_el_textarea textarea {
+    border-color: #ddd !important;
+}
+
+.webix_el_colorpicker .webix_inp_static, .webix_el_colorpicker input, .webix_el_combo .webix_inp_static, .webix_el_combo input, .webix_el_datepicker .webix_inp_static, .webix_el_datepicker input, .webix_el_richselect .webix_inp_static, .webix_el_richselect input, .webix_el_search .webix_inp_static, .webix_el_search input {
+    border-color: #ddd;
+}
+
+.webix_el_textarea textarea {
+    height: 85%; // чтобы показать нижний бордюр у memo полей, у мобильных делаем меньше
+}
+
+// сужаем боковые щечки у мобильных
+.container {
+    /*width: 95%;*/
+    padding-right: 2px;
+    padding-left: 2px;
+}

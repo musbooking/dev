@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},		
+		{
+			"path": "..\\TestBooking"
+		}
+
+	],
+	"settings": {
+		"vscode.tsc.compiler.alertTSConfigChanges": "never"
+	}
+}

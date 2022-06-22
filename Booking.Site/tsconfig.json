@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "allowJs": false,
+    "noImplicitReturns": false,
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "removeComments": true,
+    "sourceMap": true,
+    "outFile": "wwwroot/app/all.js",
+    "target": "es5"
+  },
+  "exclude": [
+    "wwwroot",
+    "node_modules",
+    "bin",
+    "obj"
+  ],
+  "compileOnSave": true 
+}

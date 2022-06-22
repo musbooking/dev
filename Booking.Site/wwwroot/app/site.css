@@ -1,0 +1,190 @@
+﻿.it-header {
+  /*color: black;*/
+  font-size: medium;
+  font-weight: bold; }
+
+.it-login-header {
+  /*color1: black;*/
+  background-color: antiquewhite;
+  font-size: medium;
+  font-weight: bold; }
+
+.it-header-nav {
+  /*color1: black;*/
+  font-size: medium; }
+
+.it-header-img-top {
+  /*margin: -8px;*/
+  margin: auto;
+  /*width1: 89px;*/
+  height: 30px; }
+
+.it-header-img {
+  /*margin: -8px;*/
+  margin: auto;
+  width: 80%;
+  /*height: 80%;*/ }
+
+.it-login-img {
+  /*margin: -8px;*/
+  margin: auto;
+  /*width: 189px;*/
+  height: 70px; }
+
+.it-event {
+  margin-top: 0px;
+  padding-top: 6px;
+  background-color: white; }
+
+.it-event-abonement {
+  background-color: cornflowerblue; }
+
+.it-event-mobile {
+  background-color: orangered; }
+
+
+
+.webixtype_green {
+    background-color: lawngreen;
+    border: 1px solid lightgreen !important;
+    border-bottom: 1px solid lightgreen !important;
+    color: green !important;
+}
+
+/*.webix_cal_body .webix_cal_row > div {
+    float: left;
+    margin-top: -20px;
+    text-align: center;
+    height: 100%;
+}
+*/
+/*.webix_cal_body :first-child > .webix_cal_row  {*/
+    /*margin-top: 15px;*/
+    /*background-color: red;
+}*/
+
+.it-status--1 {
+  background-color: lightblue; }
+
+.it-status-0 {
+  background-color: #c4c4c4; }
+
+.it-status-1 {
+  background-color: Burlywood; }
+
+.it-status-p {
+    color: green;
+}
+
+.it-status-p > .dhx_title {
+    color: greenyellow !important;
+}
+
+.it-status-10 {
+    background-color: #50c878;
+}
+
+.it-status-11 {
+  background-color: LightCoral;
+  text-decoration: line-through;
+  /*font-weight: bold;*/ }
+
+.it-reqstatus-1 { /** New*/
+    color: lightcoral;
+}
+.it-reqstatus-2 {  /** Processing*/
+    background-color: lightyellow;
+}
+.it-reqstatus-10 { /** Confirmed*/
+    background-color: lightgreen;
+}
+.it-reqstatus-11 { /** canceled */
+    background-color: lightgrey;
+}
+.it-reqstatus-12 { /** unprocessed*/
+    background-color: darkgray;
+}
+
+
+
+
+
+.it-overall {
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 8px;
+  height: 165px;
+  padding: 10px;
+  color: #303030;
+  text-shadow: 0 1px 0 #FFFFFF;
+  background-color: #e1e4ea;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #edeff4), color-stop(1, #e1e4ea));
+  background: -o-linear-gradient(top, #edeff4 0%, #e1e4ea 100%);
+  /*background: -ms-linear-gradient(top, #edeff4 0%, #e1e4ea 100%);*/
+  background: -moz-linear-gradient(top, #edeff4 0%, #e1e4ea 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #edeff4), color-stop(1, #e1e4ea));
+  box-shadow: 0px 1px 1px #d4d7de; }
+
+.it-base_10 {
+  padding: 10px;
+  height: 165px;
+  background-color: lightgreen; }
+
+.it-base_20 {
+  padding: 10px;
+  height: 165px;
+  background-color: lightblue; }
+
+.it-base_30 {
+  padding: 10px;
+  height: 165px;
+  background-color: lightyellow; }
+
+.webix_view > .webix_disabled {
+  height: 0;
+  pointer-events: none; }
+
+.webix_disabled, .webix_disabled_box {
+  pointer-events: none; }
+
+/* slide bar selected item */
+.webix_sidebar .webix_tree_item.webix_selected,
+.webix_sidebar .webix_tree_item.webix_selected span {
+  background-color: orange;
+  padding-right: 0; }
+
+.webix_sidebar_popup_title.webix_selected {
+  border-left-color: orange;
+  background: #27ae60; }
+
+.webix_sidebar_popup_list .webix_list_item.webix_selected:hover {
+  background: orange; }
+
+/* hide view bars*/
+.dhx_cal_tab {
+  visibility: hidden; }
+
+.dhx_cal_event {
+  border: 1px solid grey; }
+
+.dhx_scale_bar {
+  /*font-weight: bold;*/
+  /*font-size: larger;*/
+  /*transform: rotate(270deg);*/
+  /*transform-origin: left top 0;*/
+  word-break: break-all; }
+
+.dhx_scale_holder {
+  background-image: url("../img/databg.png");
+  /*background-size1: 100px 6350px;*/ }
+
+/*background-image: url("../assets/scheduler/imgs_dhx_terrace/databg_now.png");*/
+.dhx_scale_holder_now {
+  background-image: url("../img/databg_now.png");
+  /*background-size1: 100px 2400px;*/ }
+
+.dhx_cal_event .dhx_body, .dhx_cal_event .dhx_footer, .dhx_cal_event .dhx_header, .dhx_cal_event .dhx_title {
+  background-color: lightgrey;
+  border-color: transparent;
+  color: #fff; }
+

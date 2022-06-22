@@ -1,0 +1,49 @@
+﻿@model My.App.CRM.ClientModel
+
+<h3>@Model.Client.LastName @Model.Client.FirstName @Model.Client.SurName</h3>
+
+<hr/>
+<div>
+    <b>Информация по логинам:</b>
+    <div></div>
+    @foreach (var login in Model.Logins)
+    {
+        <u width="25%">@login.FIO</u>
+        <span width="50%">Логин: [@login.Login]</span>
+        <span width="25%">Тел: (@login.Phone)</span>
+        <span width="25%">Зарегистрирован: @login.DateCreated</span>
+    }
+</div>
+
+<p>
+    <b>Информация по скидками и штрафам:</b>
+    <table width="98%">
+    <tr>
+        <td >Партнер</td>
+        <td >Скидка</td>
+        <td >Штраф</td>
+        <td >Бан</td>
+    </tr>
+    @foreach (var part in Model.Parts)
+    {
+    <tr>
+        <td width="50%">@(part.Domain?.Name ?? "(Моб)")</td>
+        @if (Model.IsAdmin)
+        {
+        <td width="25%">@part.Discount</td>
+        <td width="25%">@part.Forfeit</td>
+        }
+        else
+        { 
+        <td width="25%">@(part.Discount>0 ?"Да":"")</td>
+        <td width="25%">@(part.Forfeit>0?"Да":"")</td>
+        }
+        @if (part.IsBanned)
+        {
+            <td width="5%">Да</td>
+        }
+    </tr>
+    }
+</table>
+</p>
+

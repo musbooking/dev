@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Musbooking service</title>
+
+    <script src="lib/routie_debug.js"></script>
+
+    <link href="lib/webix/webix.css" rel="stylesheet" />
+    <link href="lib/scheduler/dhtmlxscheduler.css" rel="stylesheet" />
+    <link href="lib/webix-ext/sidebar.css" rel="stylesheet" />
+    <link href="app/message_default.css" rel="stylesheet" />
+
+    <script src="lib/webix/webix_debug.js"></script>
+    <link href="app/common.css" rel="stylesheet" />
+    <link href="app/site.css" rel="stylesheet" />
+
+    <script src="lib/webix/skin.js"></script>
+    <script src="lib/webix/i18n/ru.js"></script>
+    <script src="lib/webix-ext/xlsx.core.min.js"></script>
+</head>
+
+<body>
+    <script src="app/web-cf.js"></script>
+    <script src="app/all.js"></script>
+
+    <script>
+        app.init();
+        webix.ready(booking.run);
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32526.322
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Lib.Shared", "Itall.Shared\Lib.Shared.shproj", "{06A4F58B-150E-4968-95EF-E517C71FDE25}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Booking.Site", "Booking.Site\Booking.Site.csproj", "{438D4B17-4FEE-419D-A02A-581B5E687807}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{438D4B17-4FEE-419D-A02A-581B5E687807}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{438D4B17-4FEE-419D-A02A-581B5E687807}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{438D4B17-4FEE-419D-A02A-581B5E687807}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{438D4B17-4FEE-419D-A02A-581B5E687807}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F8F090B3-5ACF-4053-8635-724218C57518}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Itall.Shared\Itall.Shared.projitems*{06a4f58b-150e-4968-95ef-e517c71fde25}*SharedItemsImports = 13
+		..\Share\Itall.Shared\Itall.Shared.projitems*{438d4b17-4fee-419d-a02a-581b5e687807}*SharedItemsImports = 5
+	EndGlobalSection
+EndGlobal

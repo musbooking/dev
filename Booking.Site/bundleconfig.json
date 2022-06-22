@@ -1,0 +1,36 @@
+[
+  {
+    "outputFileName": "wwwroot/app/site.min.css",
+    "inputFiles": [
+      "wwwroot/app/site.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/app/all.min.js",
+    "inputFiles": [
+      "wwwroot/app/all.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/app/web-cf.min.js",
+    "inputFiles": [
+      "wwwroot/app/web-cf.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/app/common.min.css",
+    "inputFiles": [
+      "wwwroot/app/common.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/app/common-m.min.css",
+    "inputFiles": [
+      "wwwroot/app/common-m.css"
+    ]
+  }
+]
